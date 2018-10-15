@@ -1,0 +1,78 @@
+一.安装QEMU：
+~$ git clone git://git.qemu-project.org/qemu.git
+ Cloning into 'qemu'... done.
+~$ cd qemu
+~/qemu$ ./configure
+~/qemu$ make
+~/qemu$ sudo make install
+
+二.安装缺少的软件
+c++ compiler: sudo apt-get install g++
+
+libtool : sudo apt-get install libtool
+
+glib: sudo apt-get install libglib2.0-dev
+
+pixman: sudo apt-get install libpixman-1-dev　　
+
+zlib: sudo apt-get intall zlib1g-dev
+
+dtc: 
+
+        git submodule update --init dtc
+        cd dtc
+        git fetch origin #
+        git rebase origin/master
+        make
+
+三.用QEMU来运行xv6操作系统
+编译:
+lab下 make
+运行:
+lab下 make qemu
+
+四.PC机的物理地址空间
+
++------------------+  <- 0xFFFFFFFF (4GB)
+|      32-bit             |
+|  memory mapped|
+|     devices           |
+|                            |
+/\/\/\/\/\/\/\/\/\/\
+
+/\/\/\/\/\/\/\/\/\/\
+|                            |
+|      Unused         |
+|                            |
++------------------+  <- depends on amount of RAM
+|                            |
+|                            |
+| Extended Memory  |
+|                            |
+|                            |
++------------------+  <- 0x00100000 (1MB)
+|     BIOS ROM      |
++------------------+  <- 0x000F0000 (960KB)
+|  16-bit devices,   |
+|  expansion ROMs|
++------------------+  <- 0x000C0000 (768KB)
+|   VGA Display     |
++------------------+  <- 0x000A0000 (640KB)
+|                            |
+|    Low Memory   |
+|                            |
++------------------+  <- 0x00000000
+
+五.The ROM BIOS
+用QEMU和GDB两个软件实现对操作系统的debug
+1.lab下 make qemu-gdb
+2.lab下 gdb
+我之前输入gdb会有错误提示，但是那提示里面就给出了解决办法：
+echo "add-auto-load-safe-path /home/sora1582/桌面/6.828mit/lab/.gdbinit" >> /home/sora1582/.gdbinit
+
+成功之后会看到：
+[f000:fff0]    0xffff0:	ljmp   $0x3630,$0xf000e05b
+
+
+六.Exercise2
+使用GDB的"si"命令追踪ROM BIOS几条指令，试图猜测它是做什么。
