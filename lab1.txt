@@ -71,8 +71,12 @@ lab下 make qemu
 echo "add-auto-load-safe-path /home/sora1582/桌面/6.828mit/lab/.gdbinit" >> /home/sora1582/.gdbinit
 
 成功之后会看到：
-[f000:fff0]    0xffff0:	ljmp   $0x3630,$0xf000e05b
-
+PC启动后运行的第一段程序，它最重要的功能是把操作系统从磁盘中导入内存，然后再把控制权转交给操作系统。
 
 六.Exercise2
 使用GDB的"si"命令追踪ROM BIOS几条指令，试图猜测它是做什么。
+之前窗口中显示了PC机启动运行BIOS的第一条命令：
+[f000:fff0]    0xffff0:	ljmp   $0x3630,$0xf000e05b
+emmm我看不懂汇编。
+我这个和实验里面的预期不一样啊。。。。
+
